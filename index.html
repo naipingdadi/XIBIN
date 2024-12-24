@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>异环</title>
+    <style>
+        /* 设置背景颜色和渐变效果 */
+        body {
+            background-color: black;
+            background-image: repeating-linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, 0.07),
+                rgba(255, 255, 255, 0.07) 3px,
+                transparent 3px,
+                transparent 20px
+            );
+            margin: 0;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 图片容器样式 */
+        .image-container {
+            position: absolute;
+            top: 30%;
+            right: 0;
+            width: 90%;
+            height: 40%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        /* 图片样式 */
+        .image-container img {
+            max-height: 100%;
+            max-width: 100%;
+            height: auto;
+            width: auto;
+            position: absolute;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #imageA {
+            z-index: 1;
+        }
+
+        #imageB, #imageC {
+            animation: slideInAndOut 2s ease-in-out forwards;
+            z-index: 2;
+        }
+
+        @keyframes slideInAndOut {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            25% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            75% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            87.5% {
+                transform: translateX(calc(-100% / 7));
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        /* 左下角图片容器样式 */
+        .bottom-left-image-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: calc(100% - 11.11vw);
+            height: 33.33vh;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .bottom-left-image-container img {
+            max-height: 100%;
+            max-width: 100%;
+            height: auto;
+            width: auto;
+            animation: slideInFromLeftAndOut 2s ease-in-out forwards;
+            z-index: 2;
+        }
+
+        @keyframes slideInFromLeftAndOut {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            25% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            75% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            87.5% {
+                transform: translateX(calc(100% / 7));
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* 顶部图片容器样式 */
+        .top-image-container {
+            position: absolute;
+            top: 20%;
+            width: 90%;
+            height: 10%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            transform: translateX(calc((1018 / 6500) * 100vw));
+        }
+
+        .top-image-container img {
+            max-height: 70%;
+            max-width: 30%;
+            height: auto;
+            width: auto;
+            position: relative; 
+            z-index: 3;
+            margin-right: 10px;
+        }
+
+        .top-image-container #imageF {
+            transform: scale(1.1);
+            transform-origin: left;
+        }
+
+        .top-image-container #imageE, .top-image-container #imageF, .top-image-container #imageG {
+            animation: slideInWithShake 2s ease-in-out forwards;
+        }
+
+        @keyframes slideInWithShake {
+            0% {
+                transform: translateX(-100%) translateX(0);
+                opacity: 0;
+            }
+            25% {
+                transform: translateX(0) translateX(0);
+                opacity: 1;
+            }
+            30% {
+                transform: translateX(5px) translateX(0);
+            }
+            35% {
+                transform: translateX(-5px) translateX(0);
+            }
+            40% {
+                transform: translateX(5px) translateX(0);
+            }
+            45% {
+                transform: translateX(-5px) translateX(0);
+            }
+            50% {
+                transform: translateX(0) translateX(0);
+            }
+            100% {
+                transform: translateX(0) translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* H图片容器样式 */
+        .image-h-container {
+            position: absolute;
+            bottom: 0;
+            left: calc(((1018 / 6500) * 100vw));
+            width: 0;
+            height: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-end;
+            pointer-events: none;
+            opacity: 0;
+            animation: slideInFromBelow 0.5s ease-in-out forwards;
+            animation-delay: 2s;
+        }
+
+        .image-h-container img {
+            max-width: 60vw;
+            max-height: 15vh;
+            height: auto;
+            width: auto;
+        }
+
+        @keyframes slideInFromBelow {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(-60px);
+                opacity: 1;
+            }
+        }
+
+        /* 轮播图容器样式 */
+        .carousel-container {
+            position: absolute;
+            top: 34%;
+            left: 12%;
+            width: 40%;
+            height: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* 文本轮播标题容器样式 */
+        .text-carousel-title-container {
+            position: absolute;
+            top: 34%;
+            right: 5%;
+            width: 40%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            color: black;
+            font-size: 24px;
+            text-align: center;
+            background: transparent;
+            padding: 20px;
+        }
+
+        /* 文本轮播副标题容器样式 */
+        .text-carousel-subtitle-container {
+            position: absolute;
+            top: 40%;
+            right: 5%;
+            width: 40%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            color: black;
+            font-size: 18px;
+            text-align: center;
+            background: transparent;
+            padding: 20px;
+        }
+
+        /* 文本轮播日期容器样式 */
+        .text-carousel-date-container {
+            position: absolute;
+            top: 56%;
+            right: 19%;
+            width: 40%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            color: black;
+            font-size: 16px;
+            text-align: center;
+            background: transparent;
+            padding: 20px;
+        }
+
+        /* 轮播头样式 */
+        .carousel-header {
+            position: absolute;
+            top: 31%;
+            left: 19%;
+            width: 1.5%;
+            height: 1.5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* 轮播图样式 */
+        .carousel-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border: 5px solid white;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* 轮播按钮容器样式 */
+        .carousel-buttons {
+            position: absolute;
+            top: 65%;
+            right: 23%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 6;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* 轮播按钮样式 */
+        .carousel-button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 16px 27px;
+            cursor: pointer;
+            border-radius: 23px 0 0 23px;
+            font-size: 10px;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-button:last-child {
+            border-radius: 0 23px 23px 0;
+        }
+
+        .carousel-button:hover {
+            background-color: #ff69b4;
+        }
+
+        .carousel-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        .carousel-button:first-child::before {
+            border-right: 10px solid lightblue;
+        }
+
+        .carousel-button:last-child::before {
+            border-left: 10px solid lightblue;
+        }
+
+        /* 轮播图标样式 */
+        .carousel-icon {
+            position: absolute;
+            top: 32%;
+            left: 68%;
+            width: 1%;
+            height: 1%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 6;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* 指示器容器样式 */
+        .indicator-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* 指示器样式 */
+        .indicator {
+            width: 60px;
+            height: 8px;
+            background-color: black;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: lightblue;
+        }
+
+        /* 浮层样式 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .overlay.show {
+            display: flex;
+        }
+
+        /* M图片容器样式 */
+        .image-m-container {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20%;
+            height: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 7;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            animation: slideInFromRight 0.5s ease-in-out forwards;
+            animation-delay: 2s;
+        }
+
+        .image-m-container img {
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            width: auto;
+            cursor: pointer;
+        }
+
+        /* N图片容器样式 */
+        .image-n-container {
+            position: relative;
+            width: 50%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 8;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-n-container img {
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            width: auto;
+        }
+
+        /* 预约框样式 */
+        .reservation-box {
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .reservation-box:hover {
+            background-color: lightblue;
+            color: white;
+        }
+
+        /* 白色线条样式 */
+        .white-line {
+            width: 100%;
+            height: 1px;
+            background-color: white;
+            margin: 10px 0;
+        }
+
+        @keyframes slideInFromRight {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主要图片容器 -->
+    <div class="image-container">
+        <img id="imageA" src="https://yh.wanmei.com/images/cover240718/intelPlate.png" alt="图片a">
+        <img id="imageB" src="https://yh.wanmei.com/images/cover240718/intelInterludeNews.png" alt="图片b">
+        <img id="imageC" src="https://yh.wanmei.com/images/cover240718/intelInterludeBridge.png" alt="图片c">
+    </div>
+
+    <!-- 顶部图片容器 -->
+    <div class="top-image-container">
+        <img id="imageE" src="https://yh.wanmei.com/images/cover240718/intelTit.png" alt="图片e">
+        <img id="imageF" src="https://yh.wanmei.com/images/cover240718/intelSubTit1.png" alt="图片f">
+        <img id="imageG" src="https://yh.wanmei.com/images/cover240718/intelSubTit2.png" alt="图片g">
+    </div>
+
+    <!-- 左下角图片容器 -->
+    <div class="bottom-left-image-container">
+        <img id="imageD" src="https://yh.wanmei.com/images/cover240718/intelInterludeText.png" alt="图片d">
+    </div>
+
+    <!-- H图片容器 -->
+    <div class="image-h-container">
+        <img id="imageH" src="https://yh.wanmei.com/images/cover240718/intelAdorn3.png" alt="图片h">
+    </div>
+
+    <!-- 轮播图标 -->
+    <div class="carousel-icon" id="carouselIcon">
+        <img id="imageK" src="https://yh.wanmei.com/images/cover240718/intelAdorn2.png" alt="图片k">
+    </div>
+
+    <!-- 轮播头 -->
+    <div class="carousel-header" id="carouselHeader">
+        <img id="imageJ" src="https://yh.wanmei.com/images/cover240718/intelAdorn1.png" alt="图片j">
+    </div>
+
+    <!-- 轮播图容器 -->
+    <div class="carousel-container" id="carouselContainer">
+        <img id="carouselImage" src="https://yh.wanmei.com/resources/jpg/20241202/1143ea648b5f242f4fe8a399cb5f741366bf.jpg" alt="图片1">
+    </div>
+
+    <!-- 文本轮播标题容器 -->
+    <div class="text-carousel-title-container" id="textCarouselTitleContainer">
+        <h2 id="textContentTitle"></h2>
+    </div>
+
+    <!-- 文本轮播副标题容器 -->
+    <div class="text-carousel-subtitle-container" id="textCarouselSubtitleContainer">
+        <h5 id="textContentSubtitle"></h5>
+    </div>
+
+    <!-- 文本轮播日期容器 -->
+    <div class="text-carousel-date-container" id="textCarouselDateContainer">
+        <h1 id="textContentDate"></h1>
+    </div>
+
+    <!-- 轮播按钮容器 -->
+    <div class="carousel-buttons" id="carouselButtons">
+        <button class="carousel-button" onclick="prevImage()">‹</button>
+        <button class="carousel-button" onclick="nextImage()">›</button>
+    </div>
+
+    <!-- 指示器容器 -->
+    <div class="indicator-container" id="indicatorContainer">
+        <div class="indicator active" onclick="goToSlide(0)"></div>
+        <div class="indicator" onclick="goToSlide(1)"></div>
+        <div class="indicator" onclick="goToSlide(2)"></div>
+        <div class="indicator" onclick="goToSlide(3)"></div>
+    </div>
+
+    <!-- M图片容器 -->
+    <div class="image-m-container">
+        <img id="imageM" src="https://yh.wanmei.com/images/cover240718/guide_yy.png" alt="图片m" onclick="showOverlay()">
+    </div>
+
+    <!-- 浮层 -->
+    <div class="overlay" id="overlay" onclick="hideOverlay()">
+        <div class="image-n-container">
+            <div class="reservation-box" onclick="reserve()">立即预约</div>
+            <div class="white-line"></div>
+            <img id="imageN" src="https://yh.wanmei.com/images/cover240718/eggshell_en.png" alt="图片n">
+            <div class="white-line"></div>
+        </div>
+    </div>
+
+    <script>
+        // 定义轮播图的图片数组
+        const images = [
+            "https://yh.wanmei.com/resources/jpg/20241202/1143ea648b5f242f4fe8a399cb5f741366bf.jpg",
+            "https://yh.wanmei.com/resources/jpg/20241128/1143a889c2a96a1a4dbdbbba1037a5eac487.jpg",
+            "https://yh.wanmei.com/resources/jpg/20241127/114378de7f49a0914beba3d399de0a75fd0e.jpg",
+            "https://yh.wanmei.com/resources/jpg/20241112/114317313727441880.jpg"
+        ];
+
+        // 定义轮播图的文本内容数组
+        const texts = [
+            {
+                title: "《异环》「奇点测试」感谢寄语",
+                subtitle: "期待和大家再次在海特洛市相遇！",
+                date: "2024-12-02"
+            },
+            {
+                title: "《异环》「奇点测试」今日开启 玩转都市",
+                subtitle: "解决异象事件、探索超自由大都市的妙趣日常！",
+                date: "2024-11-28"
+            },
+            {
+                title: "奇点测试」预下载开启&测试详情说明",
+                subtitle: "「奇点测试」将于11月28日11：00开启！",
+                date: "2024-11-27"
+            },
+            {
+                title: "《异环》「奇点测试」定档11.28！",
+                subtitle: "由Hotta Studio自主研发，超自然都市开放世界RPG《异环》「奇点测试」将于11月28日开启！",
+                date: "2024-11-12"
+            }
+        ];
+        
+        let currentIndex = 0;
+        let intervalId;
+
+        // 切换到下一张图片
+        function nextImage() {
+            clearInterval(intervalId); // 清除定时器
+            currentIndex = (currentIndex + 1) % images.length; // 更新索引
+            updateCarousel(); // 更新轮播图
+            resetInterval(); // 重置定时器
+        }
+
+        // 切换到上一张图片
+        function prevImage() {
+            clearInterval(intervalId); // 清除定时器
+            currentIndex = (currentIndex - 1 + images.length) % images.length; // 更新索引
+            updateCarousel(); // 更新轮播图
+            resetInterval(); // 重置定时器
+        }
+
+        // 根据指示器切换到指定图片
+        function goToSlide(index) {
+            clearInterval(intervalId); // 清除定时器
+            currentIndex = index; // 更新索引
+            updateCarousel(); // 更新轮播图
+            resetInterval(); // 重置定时器
+        }
+
+        // 更新轮播图的内容
+        function updateCarousel() {
+            document.getElementById('carouselImage').src = images[currentIndex]; // 更新图片源
+            document.getElementById('textContentTitle').innerText = texts[currentIndex].title; // 更新标题
+            document.getElementById('textContentSubtitle').innerText = texts[currentIndex].subtitle; // 更新副标题
+            document.getElementById('textContentDate').innerText = texts[currentIndex].date; // 更新日期
+            const indicators = document.querySelectorAll('.indicator'); // 获取所有指示器
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.add('active'); // 添加激活类
+                } else {
+                    indicator.classList.remove('active'); // 移除激活类
+                }
+            });
+        }
+
+        // 重置定时器
+        function resetInterval() {
+            intervalId = setInterval(nextImage, 8000); // 设置定时器，每8秒切换一次图片
+        }
+
+        // 显示浮层
+        function showOverlay() {
+            document.getElementById('overlay').classList.add('show'); // 添加显示类
+        }
+
+        // 隐藏浮层
+        function hideOverlay(event) {
+            if (event.target.id !== 'imageN') { // 如果点击的目标不是特定图片，则隐藏浮层
+                document.getElementById('overlay').classList.remove('show'); // 移除显示类
+            }
+        }
+
+        // 预约操作
+        function reserve() {
+            alert("立即预约"); // 弹出提示信息
+        }
+
+        // 页面加载后延迟执行初始化操作
+        setTimeout(() => {
+            document.getElementById('carouselContainer').style.opacity = '1'; // 显示轮播图容器
+            document.getElementById('carouselHeader').style.opacity = '1'; // 显示轮播头
+            document.getElementById('carouselIcon').style.opacity = '1'; // 显示轮播图标
+            document.getElementById('textCarouselTitleContainer').style.opacity = '1'; // 显示文本轮播标题容器
+            document.getElementById('textCarouselSubtitleContainer').style.opacity = '1'; // 显示文本轮播副标题容器
+            document.getElementById('textCarouselDateContainer').style.opacity = '1'; // 显示文本轮播日期容器
+            document.getElementById('carouselButtons').style.opacity = '1'; // 显示轮播按钮容器
+            document.getElementById('indicatorContainer').style.opacity = '1'; // 显示指示器容器
+            document.querySelector('.image-m-container').style.opacity = '1'; // 显示M图片容器
+            resetInterval(); // 重置定时器
+        }, 2000);
+
+        updateCarousel(); // 初始化轮播图
+    </script>
+</body>
+</html>
+
+
+
